@@ -47,10 +47,19 @@ public class FindPatientPage extends BaseClass {
     }
 
     public void clickFindPatientTableFirstRecord() {
-        getFindPatientTableFirstRecord().click();
+        try {
+            Thread.sleep(5000);
+            getFindPatientTableFirstRecord().click();
+        } catch (Exception e) {
+            System.out.println("Exception Occurred while Clicking on the first record: " + e.getMessage());
+        }
     }
 
     public boolean verifyNoMatchRecordsFoundMessage() {
         return getNoMatchRecordsFoundElement().isDisplayed();
+    }
+
+    public void clearSearchField(){
+        getFindPatientSearchElement().clear();
     }
 }

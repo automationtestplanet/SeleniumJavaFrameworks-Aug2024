@@ -11,6 +11,18 @@ public class Utils {
     public static FileInputStream fis;
     public static FileOutputStream fos;
     public static File propertiesFile;
+    public static String filePath = "/src/test/resources/test.properties";
+
+    static {
+        try {
+            propertiesFile = new File(System.getProperty("user.dir") + filePath);
+            fis = new FileInputStream(propertiesFile);
+
+            applicationProperties.load(fis);
+        } catch (Exception e) {
+            System.out.println("Exception Occurred while reading the properties from properties file: " + filePath);
+        }
+    }
 
     public static void readPropertiesFile(String filePath) {
         try {

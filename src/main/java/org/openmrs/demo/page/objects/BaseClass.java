@@ -1,17 +1,21 @@
 package org.openmrs.demo.page.objects;
 
 import lombok.Getter;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Getter
 public class BaseClass {
     public WebDriver driver;
+    public static String screenshotPath;
 
     public BaseClass(WebDriver driver) {
         this.driver = driver;
@@ -61,4 +65,19 @@ public class BaseClass {
         WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.stalenessOf(element));
     }
+
+    public void captureScreenshots() {
+        try {
+            TakesScreenshot ts = (TakesScreenshot) driver;
+            File screenshot = ts.getScreenshotAs(OutputType.FILE);
+            String screenshotName = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").format(new Date()).replaceAll("[^0-9]", "") + ".jpg";
+            String screenshotDirectory = System.getProperty("user.dir") + Utils.getTestProperty("screenshots.path");
+            screenshotPath = screenshotDirectory + screenshotName;
+            FileUtils.copyFile(screenshot, new File(screenshotPath));
+        } catch (Exception e) {
+            System.out.println("Exception Occurred while capturing the screenshot: " + e.getMessage());
+        }
+    }
+
+
 }

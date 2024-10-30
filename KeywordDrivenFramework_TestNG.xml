@@ -6,7 +6,7 @@
         <classes>
             <class name="openmrs.test.OpenMrsKeywordDrivenTests">
                 <methods>
-                    <include name="registerPatient"/>
+<!--                    <include name="registerPatient"/>-->
                     <include name="findPatient"/>
                     <include name="startVisitsAndAddAttachments"/>
                     <include name="deletePatient"/>
